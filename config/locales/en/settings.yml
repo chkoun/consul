@@ -134,6 +134,8 @@ en:
         notification_emails_description: "Enable sending dashboard notification emails to proposal's authors"
       sdg: SDG
       sdg_description: Enable Sustainable Development Goals sections in the administration menu and in the Global Settings.
+      allow_remove_investments_supports: "Allow remove supports on budget investments"
+      allow_remove_investments_supports_description: "Allow users remove supports on budget investments of participatory budgets during selecting projects phase."
     remote_census:
       general:
         endpoint: "Endpoint"

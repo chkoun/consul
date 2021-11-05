@@ -2,6 +2,10 @@ require "rails_helper"
 
 describe Budgets::Investments::VotesComponent do
   describe "vote link" do
+    before do
+      Setting["feature.allow_remove_investments_supports"] = false
+    end
+
     context "when investment shows votes" do
       let(:investment) { create(:budget_investment, title: "Renovate sidewalks in Main Street") }
       let(:component) { Budgets::Investments::VotesComponent.new(investment) }
@@ -25,7 +29,20 @@ describe Budgets::Investments::VotesComponent do
         expect(page).to have_button "Support", disabled: true
       end
 
-      it "shows the button to remove support when users have supported the investment" do
+      it "does not shows the button to remove support when setting is disabled" do
+        user = create(:user)
+        user.up_votes(investment)
+        sign_in(user)
+
+        render_inline component
+
+        expect(page).not_to have_button count: 1, disabled: :all
+        expect(page).not_to have_button "Remove your support"
+        expect(page).not_to have_button "Remove your support to Renovate sidewalks in Main Street"
+      end
+
+      it "shows the button to remove support when users when setting is enabled" do
+        Setting["feature.allow_remove_investments_supports"] = true
         user = create(:user)
         user.up_votes(investment)
         sign_in(user)

@@ -19,10 +19,12 @@ module Budgets
       end
 
       def destroy
-        @investment.unliked_by(current_user)
+        if Setting["feature.allow_remove_investments_supports"]
+          @investment.unliked_by(current_user)
 
-        respond_to do |format|
-          format.js { render :show }
+          respond_to do |format|
+            format.js { render :show }
+          end
         end
       end
     end
