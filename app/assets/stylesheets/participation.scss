@@ -545,8 +545,17 @@
     }
 
     img {
+      height: 100%;
       max-width: 12rem;
     }
+  }
+}
+
+.row {
+
+  &.flex-grid {
+    display: flex;
+    align-items: stretch;
   }
 }
 
